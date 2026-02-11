@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Valentine</title>
+
   <style>
     body {
       margin: 0;
@@ -18,9 +19,10 @@
     }
 
     .card {
-      background: rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.15);
       padding: 40px;
       border-radius: 20px;
+      z-index: 2;
     }
 
     h1 {
@@ -47,6 +49,26 @@
       color: white;
       position: absolute;
     }
+
+    /* Floating hearts */
+    .heart {
+      position: absolute;
+      bottom: -20px;
+      font-size: 20px;
+      animation: floatUp 6s linear infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-110vh);
+        opacity: 0;
+      }
+    }
   </style>
 </head>
 <body>
@@ -63,7 +85,6 @@
     function moveButton() {
       const x = Math.random() * (window.innerWidth - 100);
       const y = Math.random() * (window.innerHeight - 50);
-
       noBtn.style.left = x + "px";
       noBtn.style.top = y + "px";
     }
@@ -77,8 +98,25 @@
 
     document.getElementById("yesBtn").onclick = () => {
       document.body.innerHTML =
-        "<h1 style='color:white;font-family:Arial'>Yay Gowdre!!! ❤️</h1>";
+        "<h1 style='color:white;font-family:Arial'>Better luck next time Gowdre 😁</h1>";
     };
+
+    // Create floating hearts
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.innerHTML = "❤️";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+      heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 6000);
+    }
+
+    setInterval(createHeart, 300);
   </script>
 
 </body>
